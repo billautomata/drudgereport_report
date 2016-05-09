@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "nightmare": "^2.4.0"
+    "nightmare": "^2.4.0",
+    "node-schedule": "^1.1.0"
   }
 }
