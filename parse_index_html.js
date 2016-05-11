@@ -98,13 +98,7 @@ module.exports = function parse_index_html(html) {
   var third_column_links = find_links(html.slice(third_column_index_begin, third_column_index_end))
   third_column_links.forEach(function(d,i){d.section = 'third'; d.index = i})
 
-  console.log(JSON.stringify({
-    links: [
-      top_left_links,
-      headline_links,
-      first_column_links,
-      second_column_links,
-      third_column_links
-    ]
-  },null,2))
+  var links = []
+  links = links.concat(top_left_links, headline_links, first_column_links, second_column_links, third_column_links)
+  return links
 }

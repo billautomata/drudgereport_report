@@ -19,12 +19,12 @@ module.exports = function find_links(line_array){
     if(line.toLowerCase().includes('<hr>')){
       // reset the status of the story group to associate links
       current_story_group = uuid.v4()
-      console.log(line)
+      // console.log(line)
     }
     if(line.toLowerCase().includes('<img') && !line.toLowerCase().includes('noscript')){
       // set the status of the current image to associate with the next link
       current_image = line
-      console.log(line)
+      // console.log(line)
     }
     // find links where the line contains the link entirely
     if(line.includes('<A HREF=') && line.includes('</A>')){
@@ -63,7 +63,7 @@ module.exports = function find_links(line_array){
         image: current_image,
         story_group: current_story_group
       }
-      console.log(o)
+      // console.log(o)
       assert(o.href.length > 0, 'bad parse no link')
       assert(o.text.length > 0, 'bad parse no text')
       assert(o.text.length > 0, 'bad parse no story group')
