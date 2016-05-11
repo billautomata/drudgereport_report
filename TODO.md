@@ -1,9 +1,6 @@
 ## parse
-* find all images
-  * image collage
-
 * parse index.html
-  * [ ] links
+  * [x] links
     * [x] href
     * [x] text
     * [x] identify sections
@@ -12,10 +9,10 @@
       * [x] first column
       * [x] second column
       * [x] third column
-      * [ ] nth link in section
+      * [x] nth link in section
   * [x] find <hr> elements in columns to identify story groups (by uuid)
-  * [x] image tags
-    * [ ] associate with the story immediately after the image
+  * [x] find <img
+    * [x] associate with the story immediately after the image
 
 ## store
 * mongo database schema ( links )
@@ -31,6 +28,9 @@
 * [ ] pull link record from ( links ) database
 * [ ] if href is missing from the classifications database
   * [ ] classify each headline with multiple tags
+
+* [x] find all images
+  * [x] image collage
 
 * mongo database schema ( classifications )
   * href - String
