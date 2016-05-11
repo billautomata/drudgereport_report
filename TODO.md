@@ -12,31 +12,26 @@
       * [x] first column
       * [x] second column
       * [x] third column
+      * [ ] nth link in section
   * [x] find <hr> elements in columns to identify story groups (by uuid)
   * [x] image tags
-    * [ ] assign section (topleft, headline, first, second, third)
-    * [ ] associate to story-group
-  * [ ] initial tags
-    * [ ] section
+    * [ ] associate with the story immediately after the image
 
 ## store
-* mongo database schema
-  * date captured - String 
-  * associated image - String
-  * story group uuid - String
+* mongo database schema ( links )
   * href - String
   * text - String
-  * tags - Array
+  * date_captured - String
+  * section - String
+  * section index - Number
+  * associated_image - String
+  * story_group - String
 
 ## classify
-* classify each headline with multiple tags
-* sections
-  * [ ] detect image in each section
-  * [x] headline
-  * [x] above the headline section
-  * siren?
-  * all caps
-  * italics
-  * grouping by tags
-  * different color
-  * what is in scare quotes
+* [ ] pull link record from ( links ) database
+* [ ] if href is missing from the classifications database
+  * [ ] classify each headline with multiple tags
+
+* mongo database schema ( classifications )
+  * href - String
+  * tags - Array
