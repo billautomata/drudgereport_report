@@ -1,6 +1,12 @@
 module.exports = function find_links(line_array){
   var a = []
   line_array.forEach(function(line, line_idx){
+    if(line.toLowerCase().includes('<hr>')){
+      console.log(line)
+    }
+    if(line.toLowerCase().includes('<img')){
+      console.log(line)
+    }    
     // find links where the line contains the link entirely
     if(line.includes('<A HREF=') && line.includes('</A>')){
       var link_begin = line.indexOf('<A HREF=\"')

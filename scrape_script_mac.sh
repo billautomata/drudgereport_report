@@ -1,4 +1,4 @@
 #!/bin/bash
 
 TIMESTAMP=`date +%F-%H%M`
-wget -P ~/scrape_drudge/$TIMESTAMP -Hpk www.drudgereport.com
+wget -P ~/drudge_scrape/$TIMESTAMP -Hpk www.drudgereport.com

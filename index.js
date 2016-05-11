@@ -2,23 +2,8 @@ var fs = require('fs')
 var find_links = require('./find_links.js')
 var find_fontsize = require('./find_fontsize.js')
 
-// find all images
-// image collage
 
-// parse index.html
-// classify each headline with multiple tags
-// sections
-  // headline
-  //   with image?  width of the image in the html
-  // above the headline
-  // siren?
-  // all caps
-  // italics
-  // grouping by tags
-  // different color
-  // what is in scare quotes
-
-var date_string = '2016-05-10-0658'
+var date_string = '2016-05-10-2015'
 var html = fs.readFileSync('./' + date_string + '/www.drudgereport.com/index.html')
 html = html.toString().split('\r\n')
 html = html.filter(function(a){ return a.length !== 0 })
