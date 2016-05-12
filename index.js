@@ -7,9 +7,17 @@ function parse_date(date_string){
   links.forEach(function(link){
     link.capture_time = date_string
   })
-  console.log(date_string,links.length)
+  // console.log(date_string,links.length)
+  return links
 }
 var dirs = fs.readdirSync('./output/').filter(function(o){return o.includes('2016-')})
+dirs.sort()
 dirs.forEach(function(dir){
-  parse_date(dir)
+  var links = parse_date(dir)
+  console.log('--')
+  links.forEach(function(link){
+    if(link.section==='headline'){
+      console.log(link.text)
+    }
+  })
 })

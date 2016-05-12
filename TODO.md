@@ -26,8 +26,9 @@
 
 ## classify
 * [ ] pull link record from ( links ) database
-* [ ] if href is missing from the classifications database
-  * [ ] classify each headline with multiple tags
+  * [ ] if href is missing from the classifications database
+    * [ ] perform classification routine to give each headline with multiple tags
+
 
 * [x] find all images
   * [x] image collage
