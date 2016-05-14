@@ -24,8 +24,8 @@
     * Mexico > United States
     * not US > not US
   * racism
+  * news of the weird
 * what companies are mentioned most often
 * who is mentioned most often
-* 
 
 ### search tool

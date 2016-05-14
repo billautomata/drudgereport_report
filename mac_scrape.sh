@@ -1,4 +1,4 @@
 #!/bin/bash
 
-TIMESTAMP=`date +%F-%H%M`
+TIMESTAMP=`date -u +%F-%H%M-UTC`
 wget -P ~/drudge_scrape/output/$TIMESTAMP -Hpk www.drudgereport.com
