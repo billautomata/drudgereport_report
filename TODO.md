@@ -24,13 +24,14 @@
   * associated_image - String
   * story_group - String
 
-## classify
-* [ ] pull link record from ( links ) database
-  * [ ] if href is missing from the classifications database
-    * [ ] perform classification routine to give each href multiple tags
+* [x] iterate over each link
+  * [x] find capture_time & href in db, if zero results, store the link
 
-* [x] find all images
-  * [x] image collage
+## classify
+* [ ] populate links
+  * [ ] pull link record from ( links ) database
+    * [ ] if href is missing from the classifications database
+      * [ ] add to classifications data base
 
 * mongo database schema ( classifications )
   * href - String
@@ -38,3 +39,7 @@
   * who / what - String (ex. Beyonce, Big Ben)
   * where - String (ex. Arizona, Orbit, Mars, Washington DC)
   * sentiment - String (ex. positive, negative, neutral)
+
+* [ ] classify links
+  * [ ] pull link from the database with no sentiment marked
+  * [ ] render to website where you can update the metadata
