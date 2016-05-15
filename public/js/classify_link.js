@@ -48,7 +48,7 @@ $.get('/one_to_classify').then(function(d){
     btn.on('click', function(d){
       div_sentiment.datum({
         sentiment: news_type
-      })      
+      })
       btn.attr('class', 'btn btn-primary')
     })
   })
@@ -61,8 +61,26 @@ $.get('/one_to_classify').then(function(d){
     var who_array = d3.select('input#who').datum()
     var where_array = d3.select('input#where').datum()
     var tags_array = d3.select('input#tags').datum()
-    console.log(who_array,where_array,tags_array)
-    console.log(div_sentiment.datum())
+    // console.log(who_array,where_array,tags_array)
+    // console.log(div_sentiment.datum())
+    var data_to_send = { _id: d._id, who: who_array, where: where_array, tags: tags_array, sentiment: div_sentiment.datum().sentiment }
+    console.log(data_to_send)
+
+    $.ajax({
+      type: 'post',
+      url: '/classify',
+      data: JSON.stringify(data_to_send),
+      contentType: 'application/json',
+      success: function(d){
+          console.log('done posting')
+          console.log(d)
+          window.location.reload()
+        },
+        error: function(d){
+          console.log('error',d)
+        }
+    })
+
   })
 
 })
