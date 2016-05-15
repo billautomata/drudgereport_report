@@ -14,7 +14,7 @@
   * [x] find <img
     * [x] associate with the story immediately after the image
 
-## store_to_mongo.js
+## populate_links.js
 * mongo database schema ( links )
   * href - String
   * text - String
@@ -47,7 +47,9 @@
   * [ ] add buttons to add default tags
 * [ ] search for classifications
 * [ ] edit existing classification
-* [ ] stats on classificaitons 
+* [ ] mass rename tag
+  * [ ] find all instances of a tag in all classifications and change it
+* [ ] stats on classifications 
 
 ### data handling
 * [x] mongodump script

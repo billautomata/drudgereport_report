@@ -40,10 +40,9 @@ app.get('/one_to_classify', function(req,res){
     })
 })
 
+// app.post link
 app.post('/classify', function(req, res){
   console.log('body', req.body)
-
-
   db.classifications.findAndModify({
       query: { _id: mongojs.ObjectId(req.body._id) },
       update: { $set: { tags: req.body.tags, who: req.body.who, where: req.body.where, sentiment: req.body.sentiment } },
@@ -52,7 +51,18 @@ app.post('/classify', function(req, res){
   })
 })
 
+// stats
+app.get('/stats', function(req,res){
+  db.classifications.find({
+    query: { sentiment: {'$regex': 'e' }}
+  }, function(err, docs){
+    if(err){
+      console.log(err)
+    }
+    console.log(docs.length)
+    res.status(200).json(docs)
+  })
+})
 
-// app.post link
 
 app.use(express.static(__dirname + '/public'))
