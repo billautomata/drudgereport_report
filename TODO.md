@@ -47,5 +47,5 @@
 * [ ] add buttons to add default tags
 
 ### data handling
-* [ ] mongodump script
-* [ ] setup rsync
+* [x] mongodump script
+* [x] setup backup to git
