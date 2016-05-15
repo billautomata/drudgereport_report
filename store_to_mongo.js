@@ -1,6 +1,5 @@
 var fs = require('fs')
 var moment = require('moment')
-
 var mongojs = require('mongojs')
 
 // initialize database

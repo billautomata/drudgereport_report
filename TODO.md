@@ -1,4 +1,4 @@
-## parse
+## parse_index_html.js
 * parse index.html
   * [x] links
     * [x] href
@@ -14,7 +14,7 @@
   * [x] find <img
     * [x] associate with the story immediately after the image
 
-## store
+## store_to_mongo.js
 * mongo database schema ( links )
   * href - String
   * text - String
@@ -27,7 +27,7 @@
 * [x] iterate over each link
   * [x] find capture_time & href in db, if zero results, store the link
 
-## classify
+## populate_classify.js
 * [ ] populate links
   * [ ] pull link record from ( links ) database
     * [ ] if href is missing from the classifications database
@@ -40,6 +40,7 @@
   * where - String (ex. Arizona, Orbit, Mars, Washington DC)
   * sentiment - String (ex. positive, negative, neutral)
 
+## classify
 * [ ] classify links
   * [ ] pull link from the database with no sentiment marked
   * [ ] render to website where you can update the metadata
