@@ -28,10 +28,10 @@
   * [x] find capture_time & href in db, if zero results, store the link
 
 ## populate_classify.js
-* [ ] populate links
-  * [ ] pull link record from ( links ) database
-    * [ ] if href is missing from the classifications database
-      * [ ] add to classifications data base
+* [x] populate links
+  * [x] pull link record from ( links ) database
+    * [x] if href is missing from the classifications database
+      * [x] add to classifications data base
 
 * mongo database schema ( classifications )
   * href - String
@@ -40,7 +40,10 @@
   * where - String (ex. Arizona, Orbit, Mars, Washington DC)
   * sentiment - String (ex. positive, negative, neutral)
 
-## classify
+## server_classify.js
 * [ ] classify links
   * [ ] pull link from the database with no sentiment marked
   * [ ] render to website where you can update the metadata
+
+### data handling
+* [ ] setup rsync

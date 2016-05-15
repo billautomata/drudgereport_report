@@ -50,5 +50,3 @@ db.links.find({}, function(err,data){
     async.series(fns)
   }
 })
-
-console.log('1')
