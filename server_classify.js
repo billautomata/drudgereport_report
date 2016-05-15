@@ -26,7 +26,17 @@ app.get('/one_to_classify', function(req,res){
   db.classifications.find({ sentiment: '' }).limit(1)
     .toArray(function(err,docs){
       console.log(docs)
-      res.status(200).json(docs[0])
+      var doc = {}
+      if(docs.length > 0){
+        doc = docs[0]
+        db.classifications.count({ sentiment: '' }, function(err,result){
+          doc.remaining = result
+          res.status(200).json(doc)
+        })
+      } else {
+        res.status(200).json({done: true})
+      }
+
     })
 })
 

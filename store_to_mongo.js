@@ -17,6 +17,7 @@ dirs.sort()
 
 var link_count = 0
 var links_found = 0
+var links_saved = 0
 
 dirs.forEach(function(dir){
   // convert time to UTC
@@ -32,7 +33,6 @@ dirs.forEach(function(dir){
     date+= '-04:00'
   }
   time = moment.utc(date)
-
 
   var links = parse_date(dir)
 
@@ -50,9 +50,11 @@ dirs.forEach(function(dir){
         if(data.length === 0){
           console.log('saving', link.capture_time, link.href)
           db.links.save(link)
+          links_saved += 1
+          console.log([links_saved, 'links_saved', links_found, 'links_skipped'].join('\t'))
         } else {
           links_found += 1
-          console.log(links_found, link_count)
+          console.log([links_saved, 'links_saved', links_found, 'links_skipped'].join('\t'))
         }
       }
     })

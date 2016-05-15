@@ -41,9 +41,11 @@
   * sentiment - String (ex. positive, negative, neutral)
 
 ## server_classify.js
-* [ ] classify links
-  * [ ] pull link from the database with no sentiment marked
-  * [ ] render to website where you can update the metadata
+* [x] classify links
+  * [x] pull link from the database with no sentiment marked
+  * [x] render to website where you can update the metadata
+* [ ] add buttons to add default tags
 
 ### data handling
+* [ ] mongodump script
 * [ ] setup rsync

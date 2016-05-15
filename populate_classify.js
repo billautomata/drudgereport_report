@@ -14,6 +14,7 @@ db.on('error', function (err) {
 })
 
 var repeats = 0
+var non_repeats = 0
 db.links.find({}, function(err,data){
   if(err){
     console.log('error!')
@@ -38,13 +39,14 @@ db.links.find({}, function(err,data){
               where: [],
               sentiment: ''
             }, function(err,d){
-              callback()
-              console.log(repeats)
+              non_repeats = non_repeats + 1
+              console.log([repeats,'repeats   ',non_repeats,'non_repeats'].join('\t'))
+              return callback()
             })
           } else {
             repeats = repeats + 1
-            console.log(repeats)
-            callback()
+            console.log([repeats,'repeats   ',non_repeats,'non_repeats'].join('\t'))
+            return callback()
           }
         })
       })

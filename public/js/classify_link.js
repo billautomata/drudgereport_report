@@ -1,7 +1,7 @@
-console.log(d3)
-
 $.get('/one_to_classify').then(function(d){
   console.log(d)
+
+  d3.select('div#remaining').html(['<h4>', d.remaining, 'more to go...','</h4>'].join(' '))
 
   $('div.container').prepend(['<div id=id_', d._id,'></div>'].join(''))
   var parent = d3.select('div#'+'id_'+d._id).append('div').attr('class', 'col-md-12')
@@ -46,6 +46,7 @@ $.get('/one_to_classify').then(function(d){
   ;['negative', 'neutral', 'positive'].forEach(function(news_type){
     var btn = div_sentiment.append('div').attr('class', 'btn btn-default').html(news_type)
     btn.on('click', function(d){
+      div_sentiment.selectAll('div.btn').attr('class', 'btn btn-default')
       div_sentiment.datum({
         sentiment: news_type
       })
