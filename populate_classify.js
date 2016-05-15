@@ -31,9 +31,11 @@ db.links.find({}, function(err,data){
           if(docs.length === 0){
             db.classifications.save({
               href: doc.href,
-              tags: ['example'],
-              who: '',
-              where: '',
+              text: doc.text,
+              img: doc.associated_iamge,
+              tags: [],
+              who: [],
+              where: [],
               sentiment: ''
             }, function(err,d){
               callback()
