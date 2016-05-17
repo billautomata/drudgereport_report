@@ -45,11 +45,12 @@
   * [x] pull link from the database with no sentiment marked
   * [x] render to website where you can update the metadata
   * [ ] add buttons to add default tags
-* [ ] search for classifications
+* [-] mass classify by story group
+* [ ] search for classifications by text or href
 * [ ] edit existing classification
 * [ ] mass rename tag
   * [ ] find all instances of a tag in all classifications and change it
-* [ ] stats on classifications 
+* [x] stats on tags
 
 ### data handling
 * [x] mongodump script

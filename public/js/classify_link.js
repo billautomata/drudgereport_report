@@ -81,7 +81,6 @@ $.get('/one_to_classify').then(function(d){
           console.log('error',d)
         }
     })
-
   })
 
 })
