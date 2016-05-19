@@ -12,6 +12,10 @@
     "async": "^2.0.0-rc.4",
     "body-parser": "^1.15.1",
     "express": "^4.13.4",
+    "grunt-browserify": "^5.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-express-server": "^0.5.3",
+    "grunt-standard": "^2.0.0",
     "moment": "^2.13.0",
     "mongojs": "^2.4.0",
     "uuid": "^2.0.2"

@@ -1,86 +1,300 @@
-$.get('/one_to_classify').then(function(d){
-  console.log(d)
+var $ = window.$
+var d3 = window.d3
 
-  d3.select('div#remaining').html(['<h4>', d.remaining, 'more to go...','</h4>'].join(' '))
+$.get('/many_to_classify').then(function (many_data) {
+  console.log('many data', many_data)
 
-  $('div.container').prepend(['<div id=id_', d._id,'></div>'].join(''))
-  var parent = d3.select('div#'+'id_'+d._id).append('div').attr('class', 'col-md-12')
+  // draw master tag controller
+  var master_box = make_box({
+    text: '------ // ------',
+    href: ''
+  })
 
-  var text = parent.append('h4').html(d.text)
-  var href = parent.append('h6').append('a').attr('href', d.href).html(d.href)
+  master_box.inputs.forEach(function (input, input_idx) {
+    input.on('keyup', function () {
+      var value = input.node().value
+      console.log(value)
 
-  ;['who', 'where', 'tags'].forEach(function(type){
-    var div = parent.append('div').attr('class','col-md-12')
+      window.boxes.forEach(function (box) {
+        box.inputs[input_idx].node().value = value
+        box.update()
+      })
+    })
+  })
 
-    div.append('h5').attr('class', 'col-md-2 text-right').html(type)
+  // returns references to selectors, update functions, and click functions
+  window.boxes = []
+  many_data.forEach(function (d) {
+    window.boxes.push(make_box(d))
+  })
+})
 
+function make_box (d) {
+  var inputs = []
+  var updates = []
+  var parent = d3.select('div.container').append('div').attr('class', 'col-md-12')
+
+  parent.datum(d)
+  parent.append('h4').html(d.text)
+  parent.append('h6').append('a').attr('href', d.href).html(d.href)
+
+  ;['who', 'where', 'tags'].forEach(function (type) {
+    var div = parent.append('div').attr('class', 'col-md-12 inputs')
+    div.type = type
+
+    div.append('h5').attr('class', 'col-md-2 text-right').html(function () {
+      if (type === 'who') {
+        return 'who / what'
+      } else {
+        return type
+      }
+    })
     var input = div.append('input')
       .attr('id', type)
       .attr('type', 'text')
       .attr('class', 'col-md-4')
+    inputs.push(input)
+    var indicator = div.append('div').attr('class', 'indicator')
+      .attr('id', type)
+      .attr('class', 'col-md-6')
 
-    input.on('keyup', function(){
-      // console.log(input.node().value)
+    function update () {
+      // var id = input.attr('id')
+      console.log(input.node().value)
       var split = String(input.node().value).split(',')
-      split=split.map(function(d){ return d.trim() })
-      split=split.filter(function(d){ return d.length !== 0 })
+      split = split.map(function (d) {
+        return d.trim()
+      })
+      split = split.filter(function (d) {
+        return d.length !== 0
+      })
       // console.log(split)
       input.datum(split)
       indicator.selectAll('*').remove()
-      split.forEach(function(d){
+      split.forEach(function (d) {
         indicator.append('span').html(d)
           .style('outline', '1px solid black')
           .style('padding', '2px')
           .style('margin-right', '5px')
       })
+    }
+
+    updates.push(update)
+
+    input.on('keyup', function () {
+      update()
     })
-    var indicator = div.append('div')
-      .attr('id', type)
-      .attr('class', 'col-md-6')
   })
+
+  function update () {
+    updates.forEach(function (d) {
+      d()
+    })
+  }
 
   // sentiment buttons
   // submit
-  var div_sentiment = parent.append('div').attr('class','col-md-12')
+  var div_sentiment = parent.append('div').attr('class', 'col-md-12')
+  div_sentiment.style('margin-bottom', '4px')
   div_sentiment.append('h5').attr('class', 'col-md-2 text-right').html('sentiment')
-  ;['negative', 'neutral', 'positive'].forEach(function(news_type){
+  ;['negative', 'neutral', 'positive'].forEach(function (news_type) {
     var btn = div_sentiment.append('div').attr('class', 'btn btn-default').html(news_type)
-    btn.on('click', function(d){
+    btn.on('click', function (d) {
       div_sentiment.selectAll('div.btn').attr('class', 'btn btn-default')
       div_sentiment.datum({
         sentiment: news_type
       })
+      console.log(div_sentiment.datum())
       btn.attr('class', 'btn btn-primary')
     })
   })
 
   // submit button
+  var div_submit = parent.append('div').attr('class', 'col-md-6 btn btn-success').html('submit')
   parent.append('hr').attr('class', 'col-md-12')
-  var div_submit = parent.append('div').attr('class', 'col-md-12 btn btn-success').html('submit')
 
-  div_submit.on('click', function(){
-    var who_array = d3.select('input#who').datum()
-    var where_array = d3.select('input#where').datum()
-    var tags_array = d3.select('input#tags').datum()
-    // console.log(who_array,where_array,tags_array)
-    // console.log(div_sentiment.datum())
-    var data_to_send = { _id: d._id, who: who_array, where: where_array, tags: tags_array, sentiment: div_sentiment.datum().sentiment }
-    console.log(data_to_send)
+  div_submit.on('click', clicked)
 
+  function clicked () {
+    var who_array = inputs[0].datum()
+    var where_array = inputs[1].datum()
+    var tags_array = inputs[2].datum()
+    if (d._id === undefined) {
+      console.log('no data present')
+      return
+    }
+    var data_to_send = {
+      _id: d._id,
+      who: who_array,
+      where: where_array,
+      tags: tags_array,
+      sentiment: div_sentiment.datum().sentiment
+    }
+    console.log(d.text, data_to_send)
     $.ajax({
       type: 'post',
       url: '/classify',
       data: JSON.stringify(data_to_send),
       contentType: 'application/json',
-      success: function(d){
-          console.log('done posting')
-          console.log(d)
-          window.location.reload()
-        },
-        error: function(d){
-          console.log('error',d)
-        }
+      success: function (d) {
+        console.log('done posting')
+        console.log(d)
+        div_submit.attr('class', 'col-md-6 btn btn-default')
+      // window.location.reload()
+      },
+      error: function (d) {
+        console.log('error', d)
+      }
     })
-  })
+  }
 
-})
+  return {
+    parent: parent,
+    inputs: inputs,
+    update: update,
+    click: clicked
+  }
+}
+
+// function populate () {
+//   var d = this.datum()
+//   console.log(d)
+//   this.select('h4').html(d.text)
+//   this.select('h6').select('a').attr('href', d.href).html(d.href)
+//
+//   var inputs = this.selectAll('div.inputs')
+//
+//   inputs.selectAll('input').on('keyup', function () {
+//     var input = d3.select(this)
+//     var id = input.attr('id')
+//     var indicator = inputs.select('div#' + id)
+//     console.log(input.node().value)
+//
+//     console.log(indicator)
+//     var split = String(input.node().value).split(',')
+//     split = split.map(function (d) {
+//       return d.trim()
+//     })
+//     split = split.filter(function (d) {
+//       return d.length !== 0
+//     })
+//     // console.log(split)
+//     input.datum(split)
+//     indicator.selectAll('*').remove()
+//     split.forEach(function (d) {
+//       indicator.append('span').html(d)
+//         .style('outline', '1px solid black')
+//         .style('padding', '2px')
+//         .style('margin-right', '5px')
+//     })
+//   })
+// }
+
+// function render_box (d) {
+//   $('div.container').prepend(['<div id=id_', d._id, '></div>'].join(''))
+//
+//   var parent = d3.select('div#' + 'id_' + d._id).append('div').attr('class', 'col-md-12')
+//
+//   parent.append('h4').html(d.text)
+//   parent.append('h6').append('a').attr('href', d.href).html(d.href)
+//
+//   var input_lut = {}
+//   ;['who', 'where', 'tags'].forEach(function (type) {
+//     var div = parent.append('div').attr('class', 'col-md-12')
+//
+//     div.append('h5').attr('class', 'col-md-2 text-right').html(type)
+//
+//     var input = div.append('input')
+//       .attr('id', type)
+//       .attr('type', 'text')
+//       .attr('class', 'col-md-4')
+//
+//     input_lut[type] = input
+//
+//     input.on('keyup', function () {
+//       // console.log(input.node().value)
+//       var split = String(d3.select(this).node().value).split(',')
+//       split = split.map(function (d) {
+//         return d.trim()
+//       })
+//       split = split.filter(function (d) {
+//         return d.length !== 0
+//       })
+//       // console.log(split)
+//       input.datum(split)
+//       indicator.selectAll('*').remove()
+//       split.forEach(function (d) {
+//         indicator.append('span').html(d)
+//           .style('outline', '1px solid black')
+//           .style('padding', '2px')
+//           .style('margin-right', '5px')
+//       })
+//     })
+//     var indicator = div.append('div')
+//       .attr('id', type)
+//       .attr('class', 'col-md-6')
+//   })
+//
+//   // sentiment buttons
+//   // submit
+//   var div_sentiment = parent.append('div').attr('class', 'col-md-12')
+//   div_sentiment.append('h5').attr('class', 'col-md-2 text-right').html('sentiment')
+//   ;['negative', 'neutral', 'positive'].forEach(function (news_type) {
+//     var btn = div_sentiment.append('div').attr('class', 'btn btn-default').html(news_type)
+//     btn.on('click', function (d) {
+//       div_sentiment.selectAll('div.btn').attr('class', 'btn btn-default')
+//       div_sentiment.datum({
+//         sentiment: news_type
+//       })
+//       btn.attr('class', 'btn btn-primary')
+//     })
+//   })
+//
+//   // submit button
+//   var div_submit = parent.append('div').attr('class', 'col-md-12 btn btn-success').html('submit')
+//   parent.append('hr').attr('class', 'col-md-12')
+//
+//   div_submit.on('click', clicked)
+//
+//   function clicked () {
+//     var who_array = input_lut.who.datum()
+//     var where_array = input_lut.where.datum()
+//     var tags_array = input_lut.tags.datum()
+//     var data_to_send = {
+//       _id: d._id,
+//       who: who_array,
+//       where: where_array,
+//       tags: tags_array,
+//       sentiment: div_sentiment.datum().sentiment
+//     }
+//     console.log(data_to_send)
+//   // $.ajax({
+//   //   type: 'post',
+//   //   url: '/classify',
+//   //   data: JSON.stringify(data_to_send),
+//   //   contentType: 'application/json',
+//   //   success: function(d){
+//   //       console.log('done posting')
+//   //       console.log(d)
+//   //       window.location.reload()
+//   //     },
+//   //     error: function(d){
+//   //       console.log('error',d)
+//   //     }
+//   // })
+//   }
+//   return {
+//     click: clicked
+//   }
+// }
+
+// $.get('/one_to_classify').then(function (d) {
+//   console.log(d)
+//
+//   if (d.remaining !== undefined) {
+//     d3.select('div#remaining').html(['<h4>', d.remaining, 'more to go...', '</h4>'].join(' '))
+//   }
+//
+//   render_box(d)
+//
+// })
