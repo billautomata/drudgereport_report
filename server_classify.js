@@ -41,7 +41,7 @@ app.get('/one_to_classify', function(req,res){
 })
 
 app.get('/many_to_classify', function(req,res){
-  db.classifications.find({ sentiment: '' }).limit(1).skip(100)
+  db.classifications.find({ sentiment: '' }).limit(1)
     .toArray(function(err,docs){
       console.log(docs)
       var doc = {}
@@ -81,7 +81,13 @@ app.get('/many_to_classify', function(req,res){
                 db.classifications.find({ href: href }, function(err, docs){
                   console.log(docs)
                   docs.forEach(function(doc){
-                    classifications_to_send_back.push(doc)
+                    console.log(doc.tags.length)
+                    if(doc.tags.length === 0){
+                      console.log('sending', doc)
+                      classifications_to_send_back.push(doc)
+                    } else {
+                      console.log('not sending', doc)
+                    }
                   })
                   cb()
                 })
