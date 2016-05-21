@@ -1,4 +1,4 @@
-## parse_index_html.js
+## lib/parse_index_html.js
 * parse index.html
   * [x] links
     * [x] href
@@ -15,6 +15,9 @@
     * [x] associate with the story immediately after the image
 
 ## populate_links.js
+
+> Store unique instances of pairs of href and capture time.
+
 * mongo database schema ( links )
   * href - String
   * text - String
@@ -28,6 +31,9 @@
   * [x] find capture_time & href in db, if zero results, store the link
 
 ## populate_classify.js
+
+> Store unique instances of href strings to associate tags
+
 * [x] populate links
   * [x] pull link record from ( links ) database
     * [x] if href is missing from the classifications database
@@ -45,7 +51,7 @@
   * [x] pull link from the database with no sentiment marked
   * [x] render to website where you can update the metadata
   * [ ] add buttons to add default tags
-* [-] mass classify by story group
+* [x] mass classify by story group
 * [ ] search for classifications by text or href
 * [ ] edit existing classification
 * [ ] mass rename tag

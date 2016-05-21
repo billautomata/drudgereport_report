@@ -63,7 +63,7 @@ dirs.forEach(function(dir){
 
 function parse_date(date_string){
   var html = fs.readFileSync('./output/' + date_string + '/www.drudgereport.com/index.html')
-  var parse_index_html = require('./parse_index_html.js')
+  var parse_index_html = require('./lib/parse_index_html.js')
   var links = parse_index_html(html)
   links.forEach(function(link){
     link.capture_time = date_string
