@@ -10,6 +10,8 @@ $.get('/many_to_classify').then(function (many_data) {
     href: ''
   })
 
+  d3.select('div.container').append('hr').attr('class', 'col-md-12')
+
   master_box.inputs.forEach(function (input, input_idx) {
     input.on('keyup', function () {
       var value = input.node().value

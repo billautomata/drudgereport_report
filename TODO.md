@@ -56,7 +56,11 @@
 * [ ] edit existing classification
 * [ ] mass rename tag
   * [ ] find all instances of a tag in all classifications and change it
-* [x] stats on tags
+* [x] raw stats on tags
+
+## cli_mining.js
+* [ ] age of each link
+* [ ] 
 
 ### data handling
 * [x] mongodump script

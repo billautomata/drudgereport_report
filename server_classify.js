@@ -118,7 +118,11 @@ app.post('/classify', function(req, res){
   console.log('body', req.body)
   db.classifications.findAndModify({
       query: { _id: mongojs.ObjectId(req.body._id) },
-      update: { $set: { tags: req.body.tags, who: req.body.who, where: req.body.where, sentiment: req.body.sentiment } },
+      update: { $set: { tags: req.body.tags,
+        who: req.body.who,
+        where: req.body.where,
+        sentiment: req.body.sentiment }
+      },
   }, function (err, doc, lastErrorObject) {
     res.status(200).json(doc)
   })
