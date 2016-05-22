@@ -8,24 +8,25 @@
 * defeats paywalls
 
 ### themes
-* what are the dominant themes?
-* what are the trends in those themes?
+* what are the dominant / most common themes?
+* what is the sentiment of the link? (positive / negative)
+
+* what are the mandatory tags to review?
+  * donald trump
+  * hillary clinton
   * election
   * politics
   * war
   * religion
   * sex
+  * sexism
   * celebrity
-  * technology
-  * us news
-  * world news
+  * tech
+  * us news / world news
   * terrorism
   * immigration
-    * Mexico > United States
-    * not US > not US
   * racism
   * news of the weird
+
 * what companies are mentioned most often
 * who is mentioned most often
-
-### search tool
