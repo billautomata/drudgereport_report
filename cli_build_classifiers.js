@@ -38,94 +38,72 @@ db.on('error', function (err) {
 //   })
 //   // console.log(unique_hrefs[docs[80].href])
 // })
-db.classifications.find({ sentiment: { $regex: 'e' }}, function(err,docs){
+db.classifications.find({
+  sentiment: {
+    $regex: 'e'
+  }
+}, function (err, docs) {
   var tags = {}
 
-  docs.forEach(function(doc){
+  docs.forEach(function (doc) {
     doc.who.forEach(add_tags)
     doc.where.forEach(add_tags)
     doc.tags.forEach(add_tags)
-    function add_tags(tag){
-      if(tags[tag] === undefined){
+
+    function add_tags(tag) {
+      if (tags[tag] === undefined) {
         tags[tag] = 0
       }
       tags[tag] += 1
     }
   })
   var tags_array = []
-  Object.keys(tags).forEach(function(tag){
+  Object.keys(tags).forEach(function (tag) {
     var count = tags[tag]
-    tags_array.push({name: tag, v: count})
+    tags_array.push({
+      name: tag,
+      v: count
+    })
   })
-  tags_array.sort(function(a,b){ return b.v - a.v })
+  tags_array.sort(function (a, b) {
+    return b.v - a.v
+  })
   console.log(tags_array)
 
   var fns = []
   var classifiction_fns = []
 
   var tags_to_classify = []
-  tags_array.forEach(function(tag){
+  tags_array.forEach(function (tag) {
     // console.log(tag.name,tag.v)
-    if(tag.v >= 10){
-      fns.push(function(cb){db.nets.find({
-        tag: tag.name
-      }, function(err, docs){
-        if(docs.length === 0){
-          console.log(tag.name,'not found in nets.')
-          tags_to_classify.push(tag.name)
-        } else {
-          console.log(tag.name,'found in nets.')
-        }
-        cb()
-      })})
+    if (tag.v >= 10) {
+      fns.push(function (cb) {
+        db.nets.find({
+          tag: tag.name
+        }, function (err, docs) {
+          if (docs.length === 0) {
+            console.log(tag.name, 'not found in nets.')
+            tags_to_classify.push(tag.name)
+          } else {
+            console.log(tag.name, 'found in nets.')
+          }
+          cb()
+        })
+      })
     }
-    // if(tag.v >= 10){
-    //   first_fns.push(function(_first_callback){
-    //     db.nets.find({
-    //       tag: tag.name
-    //     }).toArray(function(err,_docs){
-    //       console.log(_docs.length)
-    //       if(_docs.length === 0){
-    //         fns_to_run.push(function(cb){
-    //           console.log('training', tag.name)
-    //           var c = create_binary_classifier(docs, tag.name)
-    //           var score = test_binary_classifier(docs, tag.name, c)
-    //           db.nets.save({
-    //             tag: tag.name,
-    //             classifier: JSON.stringify(c),
-    //             score: score
-    //           }, function(err, doc){
-    //             if(err){
-    //               console.log('error', err)
-    //             }
-    //             console.log('\t\t\t\t\t\t\tdone saving', doc.tag, doc.score)
-    //             return cb()
-    //           })
-    //         })
-    //       } else {
-    //         console.log('already found', tag, 'skipping')
-    //       }
-    //       return _first_callback()
-    //     })
-    //   })
-    //   first_fns.push(function(_cb){
-    //     async.series(fns_to_run)
-    //     _cb()
-    //   })
-    // }
   })
-  fns.push(function(cb){
+  fns.push(function (cb) {
     console.log(tags_to_classify)
-    tags_to_classify.forEach(function(t){
-      classifiction_fns.push(function(_cb){
+    tags_to_classify.forEach(function (t) {
+      classifiction_fns.push(function (_cb) {
         var c = create_binary_classifier(docs, t)
         var score = test_binary_classifier(docs, t, c)
         db.nets.save({
           tag: t,
           classifier: JSON.stringify(c),
           score: score
-        }, function(err, doc){
-          if(err){
+        }, function (err, doc) {
+          if (err) {
             console.log('error saving', doc.tag, err)
           }
           console.log('\t\t\t\t\t\t\tdone saving', doc.tag, doc.score)
@@ -135,25 +113,22 @@ db.classifications.find({ sentiment: { $regex: 'e' }}, function(err,docs){
     })
     cb()
   })
-  fns.push(function(cb){
+  fns.push(function (cb) {
     async.series(classifiction_fns)
     cb()
   })
   async.series(fns)
 })
 
-
-
-function create_binary_classifier(docs, tag){
+function create_binary_classifier(docs, tag) {
   console.log('creating', tag)
-  // var classifier = new natural.BayesClassifier()
+    // var classifier = new natural.BayesClassifier()
   var classifier = new natural.LogisticRegressionClassifier()
-  classifier.events.on('trainedWithDocument', function (obj) {
-  })
-  docs.forEach(function(doc){
+  classifier.events.on('trainedWithDocument', function (obj) {})
+  docs.forEach(function (doc) {
     var t = doc.tags.concat(doc.who.concat(doc.where))
     var tag_applies = false
-    if(t.indexOf(tag) !== -1){
+    if (t.indexOf(tag) !== -1) {
       tag_applies = true
     }
     classifier.addDocument(doc.text + doc.href, String(tag_applies))
@@ -161,16 +136,17 @@ function create_binary_classifier(docs, tag){
   classifier.train()
   return classifier
 }
-function test_binary_classifier(docs, tag, classifier){
+
+function test_binary_classifier(docs, tag, classifier) {
   console.log('testing', tag)
   var correct_hits = 0
-  docs.forEach(function(doc){
+  docs.forEach(function (doc) {
     var t = doc.tags.concat(doc.who.concat(doc.where))
     var found = t.indexOf(tag) !== -1
-    if(classifier.classify(doc.text + doc.href) === String(found)){
+    if (classifier.classify(doc.text + doc.href) === String(found)) {
       correct_hits = correct_hits + 1
     }
   })
-  console.log(correct_hits, docs.length, (correct_hits/docs.length).toFixed(4))
-  return Number(correct_hits/docs.length)
+  console.log(correct_hits, docs.length, (correct_hits / docs.length).toFixed(4))
+  return Number(correct_hits / docs.length)
 }
