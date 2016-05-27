@@ -1,3 +1,11 @@
+
+## bayes_classify.js
+* [ ] automatically classify links
+  * [ ] pull link from collection with no machine tags
+  * [ ] perform a classification routine for each tag with link + href
+  * [ ] save each positive tag hit in array
+  * [ ] $set machine_tags: Array
+
 ## lib/parse_index_html.js
 * parse index.html
   * [x] links
@@ -18,7 +26,7 @@
 
 > Store unique instances of pairs of href and capture time.
 
-* mongo database schema ( links )
+* mongo collection schema ( links )
   * href - String
   * text - String
   * date_captured - String
@@ -35,11 +43,11 @@
 > Store unique instances of href strings to associate tags
 
 * [x] populate links
-  * [x] pull link record from ( links ) database
-    * [x] if href is missing from the classifications database
+  * [x] pull link record from ( links ) collection
+    * [x] if href is missing from the classifications collection
       * [x] add to classifications data base
 
-* mongo database schema ( classifications )
+* mongo collection schema ( classifications )
   * href - String
   * tags - Array
   * who / what - String (ex. Beyonce, Big Ben)
@@ -47,20 +55,24 @@
   * sentiment - String (ex. positive, negative, neutral)
 
 ## server_classify.js
-* [x] classify links
-  * [x] pull link from the database with no sentiment marked
-  * [x] render to website where you can update the metadata
+* [x] discover links to classify
+  * [x] pull link from the collection with no sentiment marked
+  * [x] render to website where you can update the meta data
   * [ ] add buttons to add default tags
+
 * [x] mass classify by story group
+
 * [ ] search for classifications by text or href
 * [ ] edit existing classification
 * [ ] mass rename tag
   * [ ] find all instances of a tag in all classifications and change it
+
 * [x] raw stats on tags
 
 ## cli_mining.js
 * [ ] age of each link
-* [ ] 
+* [x] build classifier for each tag, store in nets
+
 
 ### data handling
 * [x] mongodump script
