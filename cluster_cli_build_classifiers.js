@@ -102,7 +102,7 @@ if (cluster.isMaster) {
             console.log('got done message')
             db.nets.save({
               tag: msg.tag_name,
-              classifier: JSON.stringify(msg.c),
+              classifier: msg.classifier,
               score: msg.score
             }, function (err, doc) {
               if (err) {
@@ -132,7 +132,7 @@ if (cluster.isMaster) {
     var t = msg.tag
     var c = create_binary_classifier(docs, t)
     var score = test_binary_classifier(docs, t, c)
-    process.send({ type: 'done', id: cluster.worker.id, classifier: c, tag_name: t, score: score })
+    process.send({ type: 'done', id: cluster.worker.id, classifier: JSON.stringify(c), tag_name: t, score: score })
   })
 }
 
