@@ -147,7 +147,7 @@ function create_binary_classifier (docs, tag) {
     if (t.indexOf(tag) !== -1) {
       tag_applies = true
     }
-    classifier.addDocument(doc.text + doc.href, String(tag_applies))
+    classifier.addDocument(doc.text, String(tag_applies))
   })
   console.log('done creating... now training', tag)
   classifier.train()
@@ -161,7 +161,7 @@ function test_binary_classifier (docs, tag, classifier) {
   docs.forEach(function (doc) {
     var t = doc.tags.concat(doc.who.concat(doc.where))
     var found = t.indexOf(tag) !== -1
-    if (classifier.classify(doc.text + doc.href) === String(found)) {
+    if (classifier.classify(doc.text) === String(found)) {
       correct_hits = correct_hits + 1
     }
   })

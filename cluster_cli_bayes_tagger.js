@@ -53,7 +53,7 @@ if(cluster.isMaster){
   })
 
   cluster.on('message', function(msg){
-    console.log('got message', msg)
+    // console.log('got message', msg)
     if(msg.type === 'work' && msg.id !== undefined){
       send_doc(msg.id)
     }
@@ -71,7 +71,7 @@ if(cluster.isMaster){
         classifier: natural.LogisticRegressionClassifier.restore(JSON.parse(doc.classifier))
       })
     })
-    console.log(nets.length)
+    // console.log(nets.length)
     process.send({ type: 'work', id: cluster.worker.id })
   })
 
