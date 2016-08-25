@@ -14,13 +14,15 @@
 
 ### who is linked?
 * [x] parse hosts
+* [ ] links to himself
 
 ### track position of a link
 * first position, last position
 * age vs position first seen
 
-# what are the images?
-* collage timeline
+# what about the images?
+* [ ] collage timeline of all images
+* [ ] how often does an image appear in a headline
 
 # multiple keyword search
 * graph trends over time
