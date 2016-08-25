@@ -24,10 +24,10 @@
 * [ ] collage timeline of all images
 * [ ] how often does an image appear in a headline
 
-# multiple keyword search
+### multiple keyword search
 * graph trends over time
 * images only
 * other links associated with this keyword (story group association)
 
-# drudge dvr
+#### drudge dvr
 * [x] playback specific drudge scrapes
