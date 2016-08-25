@@ -5,5 +5,5 @@ node populate_links.js
 node populate_classify.js
 node server_classify.js
 open http://localhost:60000/classify_link.html
-sh dump_databases.sh # backup
+sh scripts/dump_databases.sh # backup
 ```

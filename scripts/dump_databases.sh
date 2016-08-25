@@ -7,7 +7,7 @@ MONGO_HOST="127.0.0.1"
 MONGO_PORT="27017"
 TIMESTAMP=`date -u +%F-%H%M-UTC`
 MONGODUMP_PATH="mongodump"
-BACKUPS_DIR="/Users/bill/scrape_project/backups/$APP_NAME"
+BACKUPS_DIR="backups/$APP_NAME"
 BACKUP_NAME="$APP_NAME-$TIMESTAMP"
 
 # mongo admin --eval "printjson(db.fsyncLock())"

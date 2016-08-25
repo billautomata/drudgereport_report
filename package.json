@@ -16,7 +16,7 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-express-server": "^0.5.3",
     "grunt-standard": "^2.0.0",
-    "moment": "^2.13.0",
+    "moment": "^2.14.1",
     "mongojs": "^2.4.0",
     "natural": "^0.4.0",
     "uuid": "^2.0.2"
