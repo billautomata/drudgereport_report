@@ -2,29 +2,30 @@
 
 ## data needs
 ### link stats
-  * links posted per day
-    * [x] heatmap calendar day of year
-    * [x] barchart day of week histogram
-    * [x] barchart histogram by hour
-  * age
-    * [x] histogram of link ages
-    * [x] time appeared (x) vs plot link age (y)
-  * position
-    * first position, last position
-    * age vs position first seen
-  * who is linked?
-    * [x] parse hosts
 
+### links posted per day
+* [x] heatmap calendar day of year
+* [x] barchart day of week histogram
+* [x] barchart histogram by hour
 
-* what are the images?
-  * collage timeline
+### age
+* [x] histogram of link ages
+* [x] time appeared (x) vs plot link age (y)
 
+### who is linked?
+* [x] parse hosts
 
-* multiple keyword search
-  * graph trends over time
-  * images
-  * other keywords associated with this keyword
+### track position of a link
+* first position, last position
+* age vs position first seen
 
-  
-* drudge dvr
-  * [x] playback specific drudge scrapes
+# what are the images?
+* collage timeline
+
+# multiple keyword search
+* graph trends over time
+* images only
+* other links associated with this keyword (story group association)
+
+# drudge dvr
+* [x] playback specific drudge scrapes
