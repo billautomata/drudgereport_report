@@ -14,11 +14,17 @@
     * age vs position first seen
   * who is linked?
     * [x] parse hosts
+
+
 * what are the images?
   * collage timeline
+
+
 * multiple keyword search
   * graph trends over time
   * images
   * other keywords associated with this keyword
+
+  
 * drudge dvr
   * [x] playback specific drudge scrapes
