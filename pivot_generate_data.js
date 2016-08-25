@@ -23,11 +23,13 @@ var moment = require('moment')
 var documents = JSON.parse(require('fs').readFileSync('./docs.json'))
 console.log(documents.length)
 
+console.log(documents[1003])
+
 documents = documents.sort(function(a,b){
   return a.capture_time - b.capture_time
 })
 
-// var parse_hosts = require('./data_tools/parse_hosts.js')
+
 
 var known = {}
 var fdocs = documents.filter(function(a){
@@ -44,5 +46,7 @@ var fdocs = documents.filter(function(a){
 console.log(fdocs.length)
 console.log(fdocs[0].capture_time < fdocs[fdocs.length-1].capture_time)
 
-
-require('./data_tools/link_date_stats.js')(fdocs)
+// var parse_hosts = require('./data_tools/parse_hosts.js')
+// require('./data_tools/link_date_stats.js')(fdocs)
+// require('./data_tools/link_age.js')(documents)
+require('./data_tools/dvr.js')(documents)
