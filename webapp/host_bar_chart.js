@@ -1,9 +1,18 @@
 module.exports = function hosts_bar_chart (docs, term) {
   console.log('term', term)
   var parse_hosts = require('../data_tools/parse_hosts.js')
+
+  var terms = term.split('|')
   var filter_docs = docs.filter(function (o) {
-    return o.raw_line.toLowerCase().includes(term)
+    var found = false
+    terms.forEach(function (t) {
+      if (o.raw_line.toLowerCase().includes(t)) {
+        found = true
+      }
+    })
+    return found
   })
+
   var hosts = parse_hosts(filter_docs)
 
   var average = d3.sum(hosts, function (o) {return o.value}) / hosts.length
@@ -41,7 +50,7 @@ module.exports = function hosts_bar_chart (docs, term) {
 
   var header = parent.append('div').attr('class', 'col-md-12')
 
-  header.append('h1').html(term)
+  header.append('h1').html(term.split('|').join(' or '))
   header.append('h5').html([hosts.length, 'hosts,', filter_docs.length, 'links'].join(' '))
 
   var svg = parent.append('svg')
@@ -64,12 +73,26 @@ module.exports = function hosts_bar_chart (docs, term) {
       .attr('height', box_height)
       .attr('fill', color(idx))
 
+    var label_left_align = ((running_x + box_width) < (w * 0.5))
+
+    console.log(host.key, label_left_align)
     g.append('text').text(host.key)
       .attr('x', function () {
-        if (idx === hosts.length - 1) {
-          return 5
-        } else {
+        if (label_left_align) {
           return box_width + 5
+        } else {
+          if (running_x === 0) {
+            return box_width - 5
+          } else {
+            return -5
+          }
+        }
+      })
+      .attr('text-anchor', function () {
+        if (label_left_align) {
+          return 'start'
+        } else {
+          return 'end'
         }
       })
       .attr('y', box_height * 0.5)
