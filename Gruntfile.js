@@ -5,7 +5,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-standard')
 
   // grunt.registerTask('serve', [ 'browserify', 'express:dev', 'watch'])
-  grunt.registerTask('default', ['express', 'watch'])
+  grunt.registerTask('default', ['browserify:main', 'standard:webapp', 'express', 'watch'])
 
   grunt.initConfig({
    express: {
@@ -31,22 +31,28 @@ module.exports = function (grunt) {
         src: [
           'server_classify.js'
         ]
+      },
+      webapp: {
+        src: [
+          './webapp/*.js', './webapp/**/*.js', './webapp/**/**/*.js'
+        ]
       }
     },
-    // browserify: {
-    //   main: {
-    //     src: 'dashboard/main.js',
-    //     dest: 'public/js/build/dashboard.js',
-    //     files: {
-    //       'public/js/build/dashboard.js': ['./dashboard/*.js', './dashboard/**/*.js', './dashboard/**/**/*.js' ],
-    //     },
-    //     options: {
-    //       transform: ['brfs'],
-    //       browserifyOptions: {
-    //         debug: false
-    //       }
-    //     }
-    //   },
+    browserify: {
+      main: {
+        src: 'webapp/main.js',
+        dest: 'public/js/build/viz.js',
+        files: {
+          'public/js/build/viz.js': ['./webapp/*.js', './webapp/**/*.js', './webapp/**/**/*.js' ],
+        },
+        options: {
+          transform: ['brfs'],
+          browserifyOptions: {
+            debug: true
+          }
+        }
+      }
+    },
     //   ng_dashboard: {
     //     src: 'ng-dashboard/main.js',
     //     dest: 'public/js/build/ng-dashboard.js',
@@ -67,8 +73,8 @@ module.exports = function (grunt) {
     // },
     watch: {
       client_js: {
-        files: ['./public/js/*.js' ],
-        tasks: ['standard:client_js'],
+        files: ['./webapp/*.js' ],
+        tasks: ['standard:webapp', 'browserify:main'],
         options: {
           livereload: {
             port: 35729
