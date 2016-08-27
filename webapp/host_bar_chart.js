@@ -67,9 +67,9 @@ module.exports = function hosts_bar_chart (docs, term) {
     g.append('text').text(host.key)
       .attr('x', function () {
         if (idx === hosts.length - 1) {
-          return 4
+          return 5
         } else {
-          return box_width + 2
+          return box_width + 5
         }
       })
       .attr('y', box_height * 0.5)
@@ -83,7 +83,7 @@ module.exports = function hosts_bar_chart (docs, term) {
           if (idx === hosts.length - 1) {
             return box_width - 4
           } else {
-            return 4
+            return 5
           }
         })
         .attr('y', box_height * 0.5)
