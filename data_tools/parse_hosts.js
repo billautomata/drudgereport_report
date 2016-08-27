@@ -1,7 +1,7 @@
 var assert = require('assert')
 module.exports = function parse_hosts(docs){
 
-  console.log(Object.keys(docs[0]))
+  // console.log(Object.keys(docs[0]))
   var s
 
   var hosts = {}
@@ -40,8 +40,9 @@ module.exports = function parse_hosts(docs){
     // console.log('split', String(d.href).split('/').join('\t'))
 
   })
-  console.log(htoa(hosts).reverse())
+  // console.log(htoa(hosts).reverse())
   // console.log(hosts)
+  return htoa(hosts)
 }
 
 function htoa(h){
