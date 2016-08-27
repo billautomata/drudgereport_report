@@ -31,3 +31,13 @@
 
 #### drudge dvr
 * [x] playback specific drudge scrapes
+
+
+## data services
+
+* has this href appeared
+* has this host appeared
+* keyword search in
+
+
+* convert to CSV for 538

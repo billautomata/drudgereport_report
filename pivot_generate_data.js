@@ -1,10 +1,11 @@
 // var http = require('http')
 // var express = require('express')
-// var mongojs = require('mongojs')
+
 // var async = require('async')
 // var natural = require('natural')
 var moment = require('moment')
 
+// var mongojs = require('mongojs')
 // var db = mongojs('drudge', ['links', 'classifications', 'nets'])
 // db.on('connect', function () {
 //   console.log('database connected')
@@ -40,8 +41,11 @@ var fdocs = documents.filter(function(a){
 
 console.log(fdocs.length)
 
-var parse_hosts = require('./data_tools/parse_hosts.js')
+// var parse_hosts = require('./data_tools/parse_hosts.js')(fdocs)
 // require('./data_tools/link_date_stats.js')(fdocs)
 // require('./data_tools/link_age.js')(documents)
 // require('./data_tools/dvr.js')(documents)
 // require('./data_tools/image_search.js')(documents)
+
+// require('./data_tools/convert_to_csv.js')(fdocs, 'unique_links.tsv')
+// require('./data_tools/convert_to_csv.js')(documents, 'all_links.tsv')
