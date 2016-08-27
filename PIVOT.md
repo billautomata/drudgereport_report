@@ -3,12 +3,12 @@
 ## data needs
 ### link stats
 
-### links posted per day
+### links posted per day, link_date_stats.js
 * [x] heatmap calendar day of year
 * [x] barchart day of week histogram
 * [x] barchart histogram by hour
 
-### age
+### age, link_age.js
 * [x] histogram of link ages
 * [x] time appeared (x) vs plot link age (y)
 
@@ -21,7 +21,7 @@
 * age vs position first seen
 
 # what about the images?
-* [ ] collage timeline of all images
+* [x] collage timeline of all images
 * [ ] how often does an image appear in a headline
 
 ### multiple keyword search
@@ -40,4 +40,4 @@
 * keyword search in
 
 
-* convert to CSV for 538
+* [x] convert to CSV for 538

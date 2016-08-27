@@ -19,8 +19,9 @@ var moment = require('moment')
 // })
 
 var documents = JSON.parse(require('fs').readFileSync('./local_data/docs.json'))
-console.log(documents.length)
+console.log('total documents',documents.length)
 
+console.log('example document')
 console.log(documents[documents.length-1])
 
 documents = documents.sort(function(a,b){
@@ -39,7 +40,9 @@ var fdocs = documents.filter(function(a){
   return k
 })
 
-console.log(fdocs.length)
+console.log('unique documents', fdocs.length)
+
+console.log('begin data processing')
 
 // var parse_hosts = require('./data_tools/parse_hosts.js')(fdocs)
 // require('./data_tools/link_date_stats.js')(fdocs)
@@ -49,3 +52,5 @@ console.log(fdocs.length)
 
 // require('./data_tools/convert_to_csv.js')(fdocs, 'unique_links.tsv')
 // require('./data_tools/convert_to_csv.js')(documents, 'all_links.tsv')
+
+// require('./data_tools/extract_image_files.js')(fdocs)

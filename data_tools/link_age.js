@@ -27,6 +27,8 @@ module.exports = function link_age(docs){
     }
   })
 
+  var keys = Object.keys(results_lut)
+  console.log(results_lut[keys[0]])
   console.log(Object.keys(results_lut).length)
   console.log('done')
 }
