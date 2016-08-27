@@ -1,12 +1,16 @@
 module.exports = function hosts_bar_chart (docs, term) {
   console.log('term', term)
   var parse_hosts = require('../data_tools/parse_hosts.js')
-  var hosts = parse_hosts(docs.filter(function (o) { return o.raw_line.toLowerCase().includes(term) }))
+  var filter_docs = docs.filter(function (o) {
+    return o.raw_line.toLowerCase().includes(term)
+  })
+  var hosts = parse_hosts(filter_docs)
 
   var average = d3.sum(hosts, function (o) {return o.value}) / hosts.length
-
-  // average *= 2
-  var limit = 20
+  var limit = 8
+  if (hosts.length <= limit) {
+    limit = 3
+  }
   other_hosts = hosts.filter(function (o, idx) { return idx >= limit })
   hosts = hosts.filter(function (o, idx) { return idx < limit })
   var others_aggregate = {
@@ -16,12 +20,12 @@ module.exports = function hosts_bar_chart (docs, term) {
   other_hosts.forEach(function (o) {
     others_aggregate.value += o.value
   })
-  console.log(others_aggregate)
+  // console.log(others_aggregate)
   if (others_aggregate.value > 0) {
     hosts.push(others_aggregate)
   }
 
-  console.log(hosts[hosts.length - 1], hosts[0])
+  // console.log(hosts[hosts.length - 1], hosts[0])
 
   var w = 1024
   var box_height = 30
@@ -38,7 +42,7 @@ module.exports = function hosts_bar_chart (docs, term) {
   var header = parent.append('div').attr('class', 'col-md-12')
 
   header.append('h1').html(term)
-  header.append('h5').html([hosts.length, 'hosts,', docs.filter(function (o) { return o.raw_line.toLowerCase().includes(term) }).length, 'links'].join(' '))
+  header.append('h5').html([hosts.length, 'hosts,', filter_docs.length, 'links'].join(' '))
 
   var svg = parent.append('svg')
     .attr('width', '100%')
