@@ -3,6 +3,7 @@
 A search tool where the user inputs keywords and a series of graphs render
 
 * [ ] search box
+  * [ ] combine search terms
 * [x] dot chart, links vs time, #linksvtime
   * [ ] collapse and expand to show the hours
 * [x] bar chart, who is linked
