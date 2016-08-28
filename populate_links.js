@@ -7,6 +7,9 @@ var db = mongojs('drudge', ['links'])
 db.on('error', function (err) {
   console.log('database error', err)
 })
+db.links.find({}, function(d){
+  console.log(d.length)
+})
 db.on('connect', function () {
   console.log('database connected')
   var dirs = fs.readdirSync('./output/').filter(function(o){return o.includes('2016-')})
@@ -56,7 +59,7 @@ db.on('connect', function () {
         }
       })
     })
-  })  
+  })
 })
 
 // read directories to parse
