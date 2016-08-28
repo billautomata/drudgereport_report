@@ -9,7 +9,7 @@ var hosts_bar_chart = require('./host_bar_chart.js')
 window.fdocs = require('../local_data/fdocs.json')
 console.log(window.fdocs.length)
 
-var master_search = ',trump,hillary'
+var master_search = 'trump,hillary,email,race'
 
 var terms = master_search.split(',')
 
