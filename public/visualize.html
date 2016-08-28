@@ -8,10 +8,30 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <style>
-            body {
-                padding-top: 50px;
-                padding-bottom: 20px;
-            }
+          @font-face {
+            font-family: 'project-font';
+            src: url('fonts/Roboto-Regular.ttf') format('truetype');
+          }
+          body {
+              padding-top: 50px;
+              padding-bottom: 20px;
+              font-family: 'project-font';
+          }
+          input {
+            font-size: 32px;
+            width:100%;
+            margin-bottom: 20px;
+            border: '1px dotted rgba(0,0,0,0.1)';
+            padding-left: 10px;
+          }
+          #linksvtime {
+            margin-bottom: 20px;
+          }
+          span#term {
+             padding:3px;
+             font-family: monospace;
+             background-color: rgb(234,234,234);
+          }
         </style>
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="css/main.css">
@@ -19,10 +39,26 @@
     </head>
     <body>
       <div class='container'>
-        <div class='col-md-12'>
-          <input type='text' id='user_input_search' style='width:100%'></input>
+        <div class='col-md-12' id='explainer'>
+          <h1 class='text-center'><i>DRUDGE REPORT</i><br><b>Report</b></h1>
+          <h3 class='text-center'>A data journalism tool for researching the DRUDGE REPORT website.</h3>
+          <div class='col-md-6'>
+            <p>The DRUDGE REPORT website is one of the largest drivers of traffic in the media world. It is a mix of politics, hard news, tabloid gossip, and more. For many it is their primary news aggregator, like Google News.</p>
+            <p>This tool is meant to let people more easily explore who and what is linked by the DRUGE REPORT and when.</p>
+          </div>
+          <div class='col-md-6'>
+            <p></p>
+          </div>
         </div>
+        <hr class='col-md-12'>
+        <div class='col-md-12' id='tool'>
+          <p>enter your search terms</p>
+          <input type='text' id='user_input_search' style=></input>
+          <p>comma separated - join terms with a '|' symbol - example: <span id='term'>hillary,trump,black|lives|matter</span> for <span id='term'>hillary</span>, <span id='term'>trump</span>, and (<span id='term'>black</span> or <span id='term'>lives</span> or <span id='term'>matter</span>)</p>
+        </div>
+        <!-- <h1 class='text-center'>combined</h1> -->
         <div id='linksvtime' class='col-md-12'></div>
+        <!-- <h1 class='text-center'>individual</h1> -->
         <div id='breakout' class='col-md-12'></div>
     </div>
         <script src="js/vendor/jquery-1.11.2.min.js"></script>

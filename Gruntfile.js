@@ -48,7 +48,7 @@ module.exports = function (grunt) {
         options: {
           transform: ['brfs'],
           browserifyOptions: {
-            debug: true
+            debug: false
           }
         }
       }
@@ -73,7 +73,7 @@ module.exports = function (grunt) {
     // },
     watch: {
       client_js: {
-        files: ['./webapp/*.js' ],
+        files: ['./webapp/*.js', './public/*.html' ],
         tasks: ['standard:webapp', 'browserify:main'],
         options: {
           livereload: {

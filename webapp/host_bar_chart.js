@@ -1,3 +1,5 @@
+var Moment = require('moment')
+
 module.exports = function hosts_bar_chart (term) {
   console.log('term', term)
   var parse_hosts = require('../data_tools/parse_hosts.js')
@@ -64,6 +66,18 @@ module.exports = function hosts_bar_chart (term) {
     .attr('viewBox', [0, 0, w, h].join(' '))
     .attr('preserveApsectRatio', 'xMidYMid')
     .style('outline', '1px solid rgb(244,244,244)')
+
+  var div_links = parent.append('div')
+    .attr('class', 'col-md-12')
+
+  var btn = div_links.append('button').attr('class', 'btn btn-default btn-sm pull-right').html('show links')
+  btn.on('click', function () {
+    docs.forEach(function (doc) {
+      var p = div_links.append('div').attr('class', 'col-md-12')
+      p.append('span').attr('class', 'col-md-2 text-center').html(new Moment.utc(doc.capture_time).format('MMMM Do')).style('font-family', 'monospace')
+      p.append('a').attr('href', doc.href).text(doc.text)
+    })
+  })
 
   var k = d3.sum(hosts, function (o) {return o.value})
   var scale_x_count = d3.scaleLinear().domain([0, k]).range([0, w])

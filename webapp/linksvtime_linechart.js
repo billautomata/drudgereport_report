@@ -3,10 +3,16 @@ var d3 = window.d3
 
 var color_values = d3.scaleOrdinal(d3.schemeCategory10)
 
-module.exports = function linksvtime (docs, parent) {
+module.exports = function linksvtime (docs, parent, options) {
+  if (options === undefined) {
+    options = {
+      h: 96
+    }
+  }
+
   console.log('hello links from time chart')
   var w = 1024
-  var h = 128
+  var h = options.h
 
   // dot chart, plot chart
   // x is the day of the year
@@ -51,8 +57,8 @@ module.exports = function linksvtime (docs, parent) {
   // console.log(min_day, max_day, max_value)
 
   var margins = {
-    top: 20,
-    bottom: 10,
+    top: 10,
+    bottom: 20,
     left: 20,
     right: 10
   }
@@ -75,8 +81,8 @@ module.exports = function linksvtime (docs, parent) {
     // .style('outline', '1px solid black')
 
   // draw y scale lines
-  d3.range(0, max_value + 1, Math.ceil(max_value / 6)).forEach(function (v) {
-    console.log(v)
+  d3.range(0, max_value + 1, Math.ceil(max_value / 3)).forEach(function (v) {
+    // console.log(v)
     svg.append('line')
       .attr('x1', margins.left)
       .attr('y1', scale_y_value(v))
@@ -90,13 +96,14 @@ module.exports = function linksvtime (docs, parent) {
       .attr('y', scale_y_value(v))
       .attr('dy', '0.33em')
       .attr('text-anchor', 'end')
+      .attr('fill', 'rgba(0,0,0,0.5)')
       .style('font-size', '10px')
   })
 
   // draw x scale lines
   d3.range(min_day, max_day + 1, 1).forEach(function (day_number) {
     var date = new Moment().dayOfYear(day_number)
-    console.log(date.date())
+    // console.log(date.date())
     if (date.date() === 1) {
       svg.append('line')
         .attr('x1', scale_x_dayofyear(day_number))
@@ -105,13 +112,28 @@ module.exports = function linksvtime (docs, parent) {
         .attr('y2', h - margins.bottom)
         .attr('stroke', 'rgba(128,128,128,0.5)')
         .attr('stroke-width', '0.5px')
+
+      svg.append('text').text(date.format('MMM'))
+        .attr('x', scale_x_dayofyear(day_number))
+        .attr('y', h - margins.bottom + 10)
+        .attr('text-anchor', 'start')
+        .attr('fill', 'rgba(0,0,0,0.5)')
+        .style('font-size', '10px')
+
     } else if (date.date() % 7 === 0) {
+      svg.append('text').text(date.date())
+        .attr('x', scale_x_dayofyear(day_number))
+        .attr('y', h - margins.bottom + 10)
+        .attr('text-anchor', 'middle')
+        .attr('fill', 'rgba(0,0,0,0.5)')
+        .style('font-size', '10px')
+
       svg.append('line')
         .attr('x1', scale_x_dayofyear(day_number))
         .attr('y1', margins.top)
         .attr('x2', scale_x_dayofyear(day_number))
         .attr('y2', h - margins.bottom)
-        .attr('stroke', 'rgba(128,0,0,0.5)')
+        .attr('stroke', 'rgba(0,0,0,0.2)')
         .attr('stroke-dash', '1 2')
         .attr('stroke-width', '0.5px')
     }
@@ -177,6 +199,8 @@ module.exports = function linksvtime (docs, parent) {
           .attr('x2', scale_x_dayofyear(day + 1))
           .attr('y2', scale_y_value(data[idx + 1].value))
           .attr('stroke', color)
+          .attr('stroke-width', '3')
+          .attr('stroke-opacity', '0.5')
           .attr('fill', 'none')
       }
     })
