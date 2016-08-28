@@ -5727,7 +5727,7 @@ console.log(window.fdocs.length)
 d3.select('div#loading').style('display', 'none')
 d3.select('div#tool').style('display', null)
 
-var master_search = 'trump,hillary,infowars'
+var master_search = 'trump,hillary,infowars,dallas'
 go()
 
 function go () {
