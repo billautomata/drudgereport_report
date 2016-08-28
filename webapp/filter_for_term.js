@@ -3,7 +3,7 @@ module.exports = function filter_for_term (term) {
   var filter_docs = window.fdocs.filter(function (o) {
     var found = false
     terms.forEach(function (t) {
-      t = t.trim()
+      t = t.trim().toLowerCase()
       if (o.raw_line.toLowerCase().includes(t)) {
         // if (o.text.toLowerCase().includes(t)) {
         found = true
