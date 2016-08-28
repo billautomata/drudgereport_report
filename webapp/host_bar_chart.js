@@ -35,9 +35,10 @@ module.exports = function hosts_bar_chart (term) {
 
   var parent = d3.select('div#breakout')
     .append('div')
-    .attr('class', 'container')
-    .style('border', '1px solid black')
+    // .style('border', '1px solid black')
     .style('margin-bottom', '10px')
+
+  parent.append('hr')
 
   var header = parent.append('div').attr('class', 'col-md-12')
 

@@ -4,8 +4,8 @@ module.exports = function filter_for_term (term) {
     var found = false
     terms.forEach(function (t) {
       t = t.trim()
-      // if (o.raw_line.toLowerCase().includes(t)) {
-      if (o.text.toLowerCase().includes(t)) {
+      if (o.raw_line.toLowerCase().includes(t)) {
+        // if (o.text.toLowerCase().includes(t)) {
         found = true
       }
     })

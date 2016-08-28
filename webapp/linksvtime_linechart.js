@@ -12,7 +12,24 @@ module.exports = function linksvtime (docs, parent) {
   // x is the day of the year
   // y is the number of links in that day
   var data = []
+  var day_data = []
+
+  var day_data_lut = {}
   var data_lut = {}
+  window.fdocs.forEach(function (doc) {
+    var date = new Moment.utc(doc.capture_time).utcOffset(-5)
+    if (day_data_lut[date.dayOfYear()] === undefined) {
+      day_data_lut[date.dayOfYear()] = 0
+    }
+    day_data_lut[date.dayOfYear()] += 1
+  })
+  Object.keys(day_data_lut).forEach(function (name) {
+    day_data.push({
+      day: Number(name),
+      value: data_lut[name]
+    })
+  })
+
   docs.forEach(function (doc) {
     var date = new Moment.utc(doc.capture_time).utcOffset(-5)
     if (data_lut[date.dayOfYear()] === undefined) {
@@ -27,14 +44,26 @@ module.exports = function linksvtime (docs, parent) {
     })
   })
   // console.log(data)
-  var min_day = d3.min(data, function (d) { return d.day })
-  var max_day = d3.max(data, function (d) { return d.day })
+  var min_day = d3.min(day_data, function (d) { return d.day })
+  var max_day = d3.max(day_data, function (d) { return d.day })
 
   var max_value = d3.max(data, function (d) { return d.value })
-  console.log(min_day, max_day, max_value)
+  // console.log(min_day, max_day, max_value)
 
-  var scale_x_dayofyear = d3.scaleLinear().domain([min_day, max_day]).range([0, w])
-  var scale_y_value = d3.scaleLinear().domain([0, max_value]).range([h, 0])
+  var margins = {
+    top: 20,
+    bottom: 10,
+    left: 20,
+    right: 10
+  }
+
+  var scale_x_dayofyear = d3.scaleLinear()
+    .domain([min_day, max_day])
+    .range([margins.left, w - margins.right])
+
+  var scale_y_value = d3.scaleLinear()
+    .domain([0, max_value])
+    .range([h - margins.bottom, margins.top])
 
   parent.style('padding-bottom', '20px')
 
@@ -44,6 +73,50 @@ module.exports = function linksvtime (docs, parent) {
     .attr('preserveApsectRatio', 'xMidYMid')
     .style('background-color', 'rgb(250,250,250)')
     // .style('outline', '1px solid black')
+
+  // draw y scale lines
+  d3.range(0, max_value + 1, Math.ceil(max_value / 6)).forEach(function (v) {
+    console.log(v)
+    svg.append('line')
+      .attr('x1', margins.left)
+      .attr('y1', scale_y_value(v))
+      .attr('x2', w - margins.right)
+      .attr('y2', scale_y_value(v))
+      .attr('stroke', 'rgba(128,128,128,0.5)')
+      .attr('stroke-width', '0.5px')
+
+    svg.append('text').text(v)
+      .attr('x', margins.left - 2)
+      .attr('y', scale_y_value(v))
+      .attr('dy', '0.33em')
+      .attr('text-anchor', 'end')
+      .style('font-size', '10px')
+  })
+
+  // draw x scale lines
+  d3.range(min_day, max_day + 1, 1).forEach(function (day_number) {
+    var date = new Moment().dayOfYear(day_number)
+    console.log(date.date())
+    if (date.date() === 1) {
+      svg.append('line')
+        .attr('x1', scale_x_dayofyear(day_number))
+        .attr('y1', margins.top)
+        .attr('x2', scale_x_dayofyear(day_number))
+        .attr('y2', h - margins.bottom)
+        .attr('stroke', 'rgba(128,128,128,0.5)')
+        .attr('stroke-width', '0.5px')
+    } else if (date.date() % 7 === 0) {
+      svg.append('line')
+        .attr('x1', scale_x_dayofyear(day_number))
+        .attr('y1', margins.top)
+        .attr('x2', scale_x_dayofyear(day_number))
+        .attr('y2', h - margins.bottom)
+        .attr('stroke', 'rgba(128,0,0,0.5)')
+        .attr('stroke-dash', '1 2')
+        .attr('stroke-width', '0.5px')
+    }
+
+  })
 
   var div_labels = parent.append('div').attr('class', 'col-md-12')
 
