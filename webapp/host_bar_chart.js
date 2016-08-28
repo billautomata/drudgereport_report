@@ -33,7 +33,7 @@ module.exports = function hosts_bar_chart (term) {
 
   var color = d3.scaleOrdinal(d3.schemeCategory10)
 
-  var parent = d3.select('body')
+  var parent = d3.select('div#breakout')
     .append('div')
     .attr('class', 'container')
     .style('border', '1px solid black')
