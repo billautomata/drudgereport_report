@@ -66,15 +66,14 @@ module.exports = function linksvtime (docs) {
 
     // mogrify data
     var data = []
+    docs = require('./filter_for_term.js')(term)
     docs.forEach(function (d) {
       var date = new Moment.utc(d.capture_time).utcOffset(-5)
       // console.log(date.dayOfYear())
-      if (d.text.toLowerCase().includes(term)) {
-        data.push({
-          x: date.dayOfYear(),
-          y: date.hour()
-        })
-      }
+      data.push({
+        x: date.dayOfYear(),
+        y: date.hour()
+      })
     })
 
     // reduce

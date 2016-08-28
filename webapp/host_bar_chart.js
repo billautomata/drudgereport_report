@@ -1,19 +1,10 @@
-module.exports = function hosts_bar_chart (docs, term) {
+module.exports = function hosts_bar_chart (term) {
   console.log('term', term)
   var parse_hosts = require('../data_tools/parse_hosts.js')
 
-  var terms = term.split('|')
-  var filter_docs = docs.filter(function (o) {
-    var found = false
-    terms.forEach(function (t) {
-      if (o.raw_line.toLowerCase().includes(t)) {
-        found = true
-      }
-    })
-    return found
-  })
+  var docs = require('./filter_for_term.js')(term)
 
-  var hosts = parse_hosts(filter_docs)
+  var hosts = parse_hosts(docs)
 
   var average = d3.sum(hosts, function (o) {return o.value}) / hosts.length
   var limit = 8
@@ -50,8 +41,22 @@ module.exports = function hosts_bar_chart (docs, term) {
 
   var header = parent.append('div').attr('class', 'col-md-12')
 
-  header.append('h1').html(term.split('|').join(' or '))
-  header.append('h5').html([hosts.length, 'hosts,', filter_docs.length, 'links'].join(' '))
+  // add the line chart
+  var div_linechart = parent.append('div').attr('class', 'col-md-12')
+  var linksvtime = require('./linksvtime_linechart.js')
+  var filter = require('./filter_for_term.js')
+  console.log('prechck', term)
+  var more = linksvtime(filter(term), div_linechart)
+  more(term, 'black')
+
+  header.append('h1').html(function () {
+    if (term === '') {
+      return 'all links'
+    } else {
+      return term.split('|').join(' or ')
+    }
+  })
+  header.append('h5').html([hosts.length + other_hosts.length, 'hosts,', docs.length, 'links'].join(' '))
 
   var svg = parent.append('svg')
     .attr('width', '100%')

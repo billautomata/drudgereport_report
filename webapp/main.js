@@ -1,12 +1,18 @@
 var Moment = require('moment')
 var d3 = window.d3
 
-console.log('suuuup')
+var filter_for_term = require('./filter_for_term.js')
+var linksvtime = require('./linksvtime_linechart.js')
+var hosts_bar_chart = require('./host_bar_chart.js')
 
+// data
 window.fdocs = require('../local_data/fdocs.json')
-console.log(fdocs.length)
+console.log(window.fdocs.length)
 
-// var linksvtime = require('./linksvtime_dot_matrix.js')
+var master_search = ',trump,hillary'
+
+var terms = master_search.split(',')
+
 // var more = linksvtime(fdocs)
 // more('trump', 'rgba(255,0,0,0.3)')
 // more('', 'rgba(0,0,0,1)')
@@ -14,18 +20,30 @@ console.log(fdocs.length)
 // more('trump', 'rgba(0,255,0,1)')
 // more('hillary', 'rgba(255,0,255,0.3)')
 
-var linksvtime = require('./linksvtime_linechart.js')
-var more = linksvtime(fdocs)
-// more('trump', 'rgba(255,0,0,0.3)')
+var more = linksvtime(window.fdocs, d3.select('div#linksvtime'))
+terms.forEach(function (t, idx) {
+  more(t, 'black')
+})
 
-var hosts_bar_chart = require('./host_bar_chart.js')
+terms.forEach(function (t) {
+  hosts_bar_chart(t)
+})
+// more('', 'black')
+// more('trump', 'rgba(255,0,0,1)')
+// more('poll', 'rgba(255,255,0,1)')
+// more('nytimes', 'rgba(255,0,255,1)')
 
-// hosts_bar_chart(fdocs, '')
-// hosts_bar_chart(fdocs, 'trump')
-// hosts_bar_chart(fdocs, 'hillary')
+// var more = linksvtime(filter_for_term('hillary|clinton|trump'), d3.select('div#linksvtime'))
+// more('trump', 'rgba(255,0,0,1)')
+// more('hillary|clinton', 'rgba(0,255,0,1)')
+
+// hosts_bar_chart('')
+// hosts_bar_chart('trump')
+// hosts_bar_chart('hillary')
 // hosts_bar_chart(fdocs, 'breitbart')
 // hosts_bar_chart(fdocs, 'box office')
-// hosts_bar_chart(fdocs, 'tsa')
+// hosts_bar_chart('tsa')
+// hosts_bar_chart('facebook')
 // hosts_bar_chart(fdocs, 'box office')
 // hosts_bar_chart(fdocs, 'hillary|box office')
 // hosts_bar_chart(fdocs, 'judicialwatch')
