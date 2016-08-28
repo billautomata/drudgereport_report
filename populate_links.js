@@ -14,6 +14,7 @@ db.on('connect', function () {
   console.log('database connected')
   var dirs = fs.readdirSync('./output/').filter(function(o){return o.includes('2016-')})
   dirs.sort()
+  console.log('ndirs', dirs.length)
 
   var link_count = 0
   var links_found = 0
