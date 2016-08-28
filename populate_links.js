@@ -45,6 +45,7 @@ dirs.forEach(function(dir){
     link_count += 1
     link.capture_time = time.valueOf()
 
+    process.stdout.write('.')
     db.links.find({
       capture_time: link.capture_time,
       href: link.href
