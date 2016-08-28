@@ -33,7 +33,7 @@ module.exports = function hosts_bar_chart (term) {
 
   var color = d3.scaleOrdinal(d3.schemeCategory10)
 
-  var parent = d3.select('div#linksvtime')
+  var parent = d3.select('body')
     .append('div')
     .attr('class', 'container')
     .style('border', '1px solid black')
@@ -47,7 +47,7 @@ module.exports = function hosts_bar_chart (term) {
   var filter = require('./filter_for_term.js')
   console.log('prechck', term)
   var more = linksvtime(filter(term), div_linechart)
-  more(term, 'black')
+  more(term, false)
 
   header.append('h1').html(function () {
     if (term === '') {
@@ -80,7 +80,7 @@ module.exports = function hosts_bar_chart (term) {
 
     var label_left_align = ((running_x + box_width) < (w * 0.5))
 
-    console.log(host.key, label_left_align)
+    // console.log(host.key, label_left_align)
     g.append('text').text(host.key)
       .attr('x', function () {
         if (label_left_align) {

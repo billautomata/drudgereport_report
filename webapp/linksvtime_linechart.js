@@ -1,6 +1,8 @@
 var Moment = require('moment')
 var d3 = window.d3
 
+var color_values = d3.scaleOrdinal(d3.schemeCategory10)
+
 module.exports = function linksvtime (docs, parent) {
   console.log('hello links from time chart')
   var w = 1024
@@ -34,14 +36,38 @@ module.exports = function linksvtime (docs, parent) {
   var scale_x_dayofyear = d3.scaleLinear().domain([min_day, max_day]).range([0, w])
   var scale_y_value = d3.scaleLinear().domain([0, max_value]).range([h, 0])
 
+  parent.style('padding-bottom', '20px')
+
   var svg = parent.append('svg')
     .attr('width', '100%')
     .attr('viewBox', [0, 0, w, h].join(' '))
     .attr('preserveApsectRatio', 'xMidYMid')
-    .style('outline', '1px solid black')
+    .style('background-color', 'rgb(250,250,250)')
+    // .style('outline', '1px solid black')
 
-  function add_elements (term, color) {
+  var div_labels = parent.append('div').attr('class', 'col-md-12')
+
+  var n_elements = 0
+  function add_elements (term, do_label) {
+    color = color_values(n_elements)
+    if (do_label === undefined) {
+      do_label = true
+    }
+    if (do_label) {
+      div_labels.append('div').attr('class', 'btn').text(function () {
+        if (term === '') {
+          return 'all links'
+        } else {
+          return term
+        }
+      })
+        .style('background-color', color)
+        .style('color', 'white')
+    }
+
+    n_elements += 1
     console.log('adding lines for term', term)
+
     var data = []
     var data_lut = {}
     d3.range(min_day, max_day + 1, 1).forEach(function (day) { data_lut[day] = 0 })
@@ -61,7 +87,7 @@ module.exports = function linksvtime (docs, parent) {
     })
     data.forEach(function (d) {
       d.value = data_lut[d.day]
-      console.log(d.value)
+    // console.log(d.value)
     })
 
     // draw the lines
@@ -71,7 +97,7 @@ module.exports = function linksvtime (docs, parent) {
       } else {
         var day = d.day
         var v = d.value
-        console.log(day)
+        // console.log(day)
         svg.append('line')
           .attr('x1', scale_x_dayofyear(day))
           .attr('y1', scale_y_value(v))

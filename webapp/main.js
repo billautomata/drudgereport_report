@@ -13,6 +13,16 @@ var master_search = ',trump,hillary'
 
 var terms = master_search.split(',')
 
+console.log('terms', terms)
+
+var override = false
+if (terms.filter(function (o) { return o.length === 0}).length === 0) {
+  // terms = terms.join('|')
+  override = true
+}
+
+console.log(terms, override)
+
 // var more = linksvtime(fdocs)
 // more('trump', 'rgba(255,0,0,0.3)')
 // more('', 'rgba(0,0,0,1)')
@@ -20,7 +30,14 @@ var terms = master_search.split(',')
 // more('trump', 'rgba(0,255,0,1)')
 // more('hillary', 'rgba(255,0,255,0.3)')
 
-var more = linksvtime(window.fdocs, d3.select('div#linksvtime'))
+var more
+
+if (override) {
+  more = linksvtime(filter_for_term(terms.join('|')), d3.select('div#linksvtime'))
+} else {
+  more = linksvtime(window.fdocs, d3.select('div#linksvtime'))
+}
+
 terms.forEach(function (t, idx) {
   more(t, 'black')
 })
