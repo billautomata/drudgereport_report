@@ -8,7 +8,7 @@ db.on('error', function (err) {
   console.log('database error', err)
 })
 db.links.find({}, function(d){
-  console.log(d.length)
+  // console.log(d.length)
 })
 db.on('connect', function () {
   console.log('database connected')
