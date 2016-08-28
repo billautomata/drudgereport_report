@@ -24,7 +24,7 @@ module.exports = function (grunt) {
       },
       client_js: {
         src: [
-          './public/js/classify_link.js'
+          './docs/js/classify_link.js'
         ]
       },
       server_js: {
@@ -41,9 +41,9 @@ module.exports = function (grunt) {
     browserify: {
       main: {
         src: 'webapp/main.js',
-        dest: 'public/js/build/viz.js',
+        dest: 'docs/js/build/viz.js',
         files: {
-          'public/js/build/viz.js': ['./webapp/*.js', './webapp/**/*.js', './webapp/**/**/*.js' ],
+          'docs/js/build/viz.js': ['./webapp/*.js', './webapp/**/*.js', './webapp/**/**/*.js' ],
         },
         options: {
           transform: ['brfs'],
@@ -55,9 +55,9 @@ module.exports = function (grunt) {
     },
     //   ng_dashboard: {
     //     src: 'ng-dashboard/main.js',
-    //     dest: 'public/js/build/ng-dashboard.js',
+    //     dest: 'docs/js/build/ng-dashboard.js',
     //     files: {
-    //       'public/js/build/ng-dashboard.js': [
+    //       'docs/js/build/ng-dashboard.js': [
     //         './ng-dashboard/*.js',
     //         './ng-dashboard/*/*.js',
     //         './ng-dashboard/**/**/*.js' ],
@@ -73,7 +73,7 @@ module.exports = function (grunt) {
     // },
     watch: {
       client_js: {
-        files: ['./webapp/*.js', './public/*.html' ],
+        files: ['./webapp/*.js', './docs/*.html' ],
         tasks: ['standard:webapp', 'browserify:main'],
         options: {
           livereload: {

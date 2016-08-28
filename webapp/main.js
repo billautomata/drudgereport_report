@@ -8,6 +8,9 @@ var hosts_bar_chart = require('./host_bar_chart.js')
 window.fdocs = require('../local_data/fdocs.json')
 console.log(window.fdocs.length)
 
+d3.select('div#loading').style('display', 'none')
+d3.select('div#tool').style('display', null)
+
 var master_search = 'trump,hillary,infowars'
 go()
 

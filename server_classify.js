@@ -167,4 +167,4 @@ app.get('/tags', function(req, res){
 
 })
 
-app.use(express.static(__dirname + '/public'))
+app.use(express.static(__dirname + '/docs'))
