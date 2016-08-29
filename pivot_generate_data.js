@@ -29,7 +29,7 @@ var fdocs = documents.filter(function(a){
 
 console.log('unique documents', fdocs.length)
 
-require('./data_tools/convert_to_json.js')(fdocs, 'fdocs.json')
+// require('./data_tools/convert_to_json.js')(fdocs, 'fdocs.json')
 
 // console.log('begin data processing')
 
@@ -42,4 +42,4 @@ require('./data_tools/convert_to_json.js')(fdocs, 'fdocs.json')
 // require('./data_tools/convert_to_csv.js')(fdocs, 'unique_links.tsv')
 // require('./data_tools/convert_to_csv.js')(documents, 'all_links.tsv')
 
-// require('./data_tools/extract_image_files.js')(fdocs)
+require('./data_tools/extract_image_files.js')(fdocs)
