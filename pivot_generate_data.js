@@ -1,10 +1,3 @@
-// var http = require('http')
-// var express = require('express')
-
-// var async = require('async')
-// var natural = require('natural')
-var moment = require('moment')
-
 var documents = JSON.parse(require('fs').readFileSync('./local_data/docs.json'))
 console.log('total documents',documents.length)
 

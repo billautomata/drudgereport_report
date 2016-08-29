@@ -10,11 +10,12 @@ module.exports = function(docs){
   var headlines = []
   var fns = []
 
-  fns.push(function(next){console.log('starting')})
+  fns.push(function(next){next()})
 
   docs.forEach(function(d,idx){
+    console.log('doc idx', idx)
     fns.push(function(next){
-	console.log(d)
+	    console.log('from inside', d)
 	    if(d.image.length > 0 || (d.image.indexOf('png') !== -1 || d.image.indexOf('jpg') !== -1)){
 	      console.log(idx, d.image, d.capture_time)
 	      var begin_idx = d.image.toLowerCase().indexOf('img src="')
@@ -44,21 +45,23 @@ module.exports = function(docs){
 	          console.log('bad', full_path)
 	        } else {
 	          console.log(full_path, just_image_name)
-		  headlines.push({ text: d.text, href: d.href, t: d.capture_time, img: d.capture_time+'-'+just_image_name  })
+		        headlines.push({ text: d.text, href: d.href, t: d.capture_time, img: d.capture_time+'-'+just_image_name  })
 	          fse.copySync(full_path, '/home/bill/drudgereport_report/local_data/images/'+d.capture_time+'-'+just_image_name)
 	        }
-	  	return next()
+	  	    return next()
 	      })
-	    }
+	    } else {
+        next()
+      }
     })
-    console.log(idx)
     if(idx === docs.length-1){
-console.log('got here!')
+      console.log('got to the end!')
       fns.push(function(next){
         fs.writeFileSync('/home/bill/drudgereport_report/local_data/images/desc.json', JSON.stringify(headlines))
-	console.log('done!')
+	      console.log('done!')
         return next()
       })
+      console.log('n fns', fns.length)
       async.series(fns)
     }
   })
