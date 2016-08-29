@@ -12,10 +12,10 @@ module.exports = function(docs){
 
   fns.push(function(next){next()})
 
-  docs.forEach(function(d,idx){    
+  docs.forEach(function(d,idx){
     if(d.image.length > 0 || (d.image.indexOf('png') !== -1 || d.image.indexOf('jpg') !== -1)){
       fns.push(function(next){
-	      console.log(idx, d.image, d.capture_time)
+	      // console.log(idx, d.image, d.capture_time)
 	      var begin_idx = d.image.toLowerCase().indexOf('img src="')
 	      assert(begin_idx > 0, true)
 	      var end_idx = d.image.toLowerCase().indexOf('"', begin_idx+10)
@@ -29,7 +29,7 @@ module.exports = function(docs){
 	      // var t_non_utc = new moment.utc(d.capture_time)
 	      // console.log(t.toString(), t.month()+1, t.date(), t.year(), leftpad(t.hour(),2,0), leftpad(t.minute(),2,0))
 	      var file_name = [t.year(), leftpad(t.month()+1,2,0), leftpad(t.date(),2,0), leftpad(t.hour(),2,0) + leftpad(t.minute(),2,0), 'UTC'].join('-')
-	      console.log(file_name, image_substring)
+	      // console.log(file_name, image_substring)
 
 	      var full_path = '/home/bill/drudgereport_report/output/'+file_name+'/'+image_substring
 
