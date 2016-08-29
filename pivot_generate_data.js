@@ -5,32 +5,11 @@
 // var natural = require('natural')
 var moment = require('moment')
 
-// var mongojs = require('mongojs')
-// var db = mongojs('drudge', ['links', 'classifications', 'nets'])
-// db.on('connect', function () {
-//   console.log('database connected')
-// })
-// db.on('error', function (err) {
-//   console.log('database error', err)
-// })
-// db.links.find({}, function(err, docs){
-//   console.log('found ', docs.length, ' docs')
-//   var reduced = []
-//   docs.forEach(function(d){
-//
-//   })
-//   require('fs').writeFileSync('./local_data/docs.json', JSON.stringify(docs))
-// })
-
-
-
 var documents = JSON.parse(require('fs').readFileSync('./local_data/docs.json'))
 console.log('total documents',documents.length)
 
 console.log('example document')
 console.log(documents[documents.length-1])
-
-
 
 documents = documents.sort(function(a,b){
   return a.capture_time - b.capture_time
@@ -52,7 +31,7 @@ console.log('unique documents', fdocs.length)
 
 require('./data_tools/convert_to_json.js')(fdocs, 'fdocs.json')
 
-console.log('begin data processing')
+// console.log('begin data processing')
 
 // var parse_hosts = require('./data_tools/parse_hosts.js')(fdocs)
 // require('./data_tools/link_date_stats.js')(fdocs)
