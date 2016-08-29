@@ -12,11 +12,9 @@ module.exports = function(docs){
 
   fns.push(function(next){next()})
 
-  docs.forEach(function(d,idx){
-    console.log('doc idx', idx)
-    fns.push(function(next){
-	    console.log('from inside', d)
-	    if(d.image.length > 0 || (d.image.indexOf('png') !== -1 || d.image.indexOf('jpg') !== -1)){
+  docs.forEach(function(d,idx){    
+    if(d.image.length > 0 || (d.image.indexOf('png') !== -1 || d.image.indexOf('jpg') !== -1)){
+      fns.push(function(next){
 	      console.log(idx, d.image, d.capture_time)
 	      var begin_idx = d.image.toLowerCase().indexOf('img src="')
 	      assert(begin_idx > 0, true)
@@ -42,18 +40,17 @@ module.exports = function(docs){
 	      var file_found = false
 	      fs.access(full_path, fs.constants.F_OK, function(err){
         	if(err){
-	          console.log('bad', full_path)
+	          console.log('bad', just_image_name)
 	        } else {
-	          console.log(full_path, just_image_name)
+	          console.log('good', full_path, just_image_name)
 		        headlines.push({ text: d.text, href: d.href, t: d.capture_time, img: d.capture_time+'-'+just_image_name  })
 	          fse.copySync(full_path, '/home/bill/drudgereport_report/local_data/images/'+d.capture_time+'-'+just_image_name)
 	        }
 	  	    return next()
 	      })
-	    } else {
-        next()
-      }
-    })
+
+      })
+    }
     if(idx === docs.length-1){
       console.log('got to the end!')
       fns.push(function(next){
