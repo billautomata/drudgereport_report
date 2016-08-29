@@ -22,7 +22,7 @@ module.exports = function(docs){
 	      assert(end_idx > 0, true)
 	      var image_substring = d.image.substring(begin_idx+9, end_idx).split('../')[1]
 	      if(image_substring === undefined){
-	        return
+	        return next()
 	      }
 	      // console.log(d.image.substring(begin_idx+9, end_idx), d.capture_time)
 	      var t = new moment.utc(d.capture_time)
@@ -48,7 +48,6 @@ module.exports = function(docs){
 	        }
 	  	    return next()
 	      })
-
       })
     }
     if(idx === docs.length-1){
