@@ -12,6 +12,9 @@ d3.select('div#loading').style('display', 'none')
 d3.select('div#tool').style('display', null)
 
 var master_search = 'trump,hillary,infowars,dallas'
+if (window.location.hash.includes('#')) {
+  master_search = window.location.hash.split('#')[1]
+}
 go()
 
 function go () {
@@ -55,6 +58,7 @@ d3.select('input#user_input_search').property('value', master_search)
 d3.select('input#user_input_search').on('keydown', function () {
   if (d3.event.keyCode === 13) {
     master_search = d3.select(this).property('value')
+    window.location.hash = '#' + master_search
     go()
   }
 })
