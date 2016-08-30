@@ -73,8 +73,17 @@ module.exports = function (grunt) {
     // },
     watch: {
       client_js: {
-        files: ['./webapp/*.js', './docs/*.html' ],
+        files: ['./webapp/*.js', './docs/index.html' ],
         tasks: ['standard:webapp', 'browserify:main'],
+        options: {
+          livereload: {
+            port: 35729
+          }
+        },
+      },
+      images_viewer: {
+        files: ['./docs/collage/*.*' ],
+        tasks: [],
         options: {
           livereload: {
             port: 35729
