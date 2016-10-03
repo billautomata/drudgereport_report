@@ -13,3 +13,9 @@ A search tool where the user inputs keywords and a series of graphs render
 * [ ] list links for each search term
 * [ ] image collage
 * [ ] polish
+
+```
+node populate_links.js
+node mongo_to_local_json.js
+node pivot_generate_data.js
+```

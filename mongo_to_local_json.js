@@ -13,4 +13,6 @@ db.links.find({}, function(err, docs){
 
   })
   require('fs').writeFileSync('./local_data/docs.json', JSON.stringify(docs))
+  console.log('done saving')
+  process.exit(0)
 })
