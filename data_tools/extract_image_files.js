@@ -13,15 +13,33 @@ module.exports = function(docs){
   fns.push(function(next){next()})
 
   docs.forEach(function(d,idx){
+    if(idx === docs.length-1){
+
+      fns.push(function(next){
+        console.log('got to the end!')
+        fs.writeFileSync('/home/bill/drudgereport_report/local_data/images/desc.json', JSON.stringify(headlines))
+	      console.log('done!')
+        return next()
+      })
+      console.log('n fns', fns.length)
+      async.series(fns)
+    }
+
     if(d.image.length > 0 || (d.image.indexOf('png') !== -1 || d.image.indexOf('jpg') !== -1)){
       fns.push(function(next){
 	      // console.log(idx, d.image, d.capture_time)
 	      var begin_idx = d.image.toLowerCase().indexOf('img src="')
-	      assert(begin_idx > 0, true)
+	      // assert(begin_idx > 0, true)
 	      var end_idx = d.image.toLowerCase().indexOf('"', begin_idx+10)
-	      assert(end_idx > 0, true)
+	      // assert(end_idx > 0, true)
+        if(begin_idx < 0 || end_idx < 0){
+          console.log('reutnred bad idx')
+	        return next()
+	      }
+
 	      var image_substring = d.image.substring(begin_idx+9, end_idx).split('../')[1]
 	      if(image_substring === undefined){
+          console.log('reutnred undefined')
 	        return next()
 	      }
 	      // console.log(d.image.substring(begin_idx+9, end_idx), d.capture_time)
@@ -49,16 +67,6 @@ module.exports = function(docs){
 	  	    return next()
 	      })
       })
-    }
-    if(idx === docs.length-1){
-      console.log('got to the end!')
-      fns.push(function(next){
-        fs.writeFileSync('/home/bill/drudgereport_report/local_data/images/desc.json', JSON.stringify(headlines))
-	      console.log('done!')
-        return next()
-      })
-      console.log('n fns', fns.length)
-      async.series(fns)
     }
   })
 
