@@ -15,6 +15,8 @@ A search tool where the user inputs keywords and a series of graphs render
 * [ ] polish
 
 ```
+# copy the scrape directories to ./output/
+nvm use 4
 node populate_links.js
 node mongo_to_local_json.js
 node pivot_generate_data.js

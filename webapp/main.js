@@ -11,7 +11,7 @@ console.log(window.fdocs.length)
 d3.select('div#loading').style('display', 'none')
 d3.select('div#tool').style('display', null)
 
-var master_search = 'trump,hillary,infowars,dallas'
+var master_search = 'trump,hillary,mail,leak,tape,russia'
 if (window.location.hash.includes('#')) {
   master_search = window.location.hash.split('#')[1]
 }
